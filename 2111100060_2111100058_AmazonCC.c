@@ -631,6 +631,22 @@ void removerCarrinho(ListCarrinho *carrinho, int id) {
     }
 }
 
+
+// Função que Limpa o Carrinho
+void limparCarrinho(ListCarrinho *carrinho) {
+    Carrinho *auxForc = carrinho->primeiro;
+    Carrinho *anteriorc;
+    // Free em todos os elementos do carrinho
+    while(auxForc != NULL) {
+        anteriorc = auxForc;
+        auxForc = auxForc->proximo;
+        free(anteriorc);
+    }
+    carrinho->primeiro = NULL;
+    carrinho->ultimo = NULL;
+}
+
+
 // Função que Finaliza a Compra
 void finalizarCompra(ListProduto *produtos, ListCarrinho *carrinho) {
     limparCarrinho(carrinho);
@@ -689,6 +705,22 @@ void removerProdutoCarrinho(ListProduto *produtos, ListCarrinho *carrinho) {
     }
 }
 
+
+// Função que Limpa a Memoria
+void limparMemoria(ListProduto *produtos, ListCarrinho *carrinho) {
+    // limpa o carrinho
+    limparCarrinho(carrinho);
+    // Free em todos os produtos
+    Produto *auxFor = produtos->primeiro;
+    Produto *anterior;
+    while(auxFor != NULL) {
+        anterior = auxFor;
+        auxFor = auxFor->proximo;
+        free(anterior);
+    }
+}
+
+
 // Função do Menu do carrinho
 void mainCarrinho(ListProduto *produtos, ListCarrinho *carrinho) {
     int opt = 9;
@@ -746,32 +778,6 @@ void mainCarrinho(ListProduto *produtos, ListCarrinho *carrinho) {
 
 }
 
-// Função que Limpa o Carrinho
-void limparCarrinho(ListCarrinho *carrinho) {
-    Carrinho *auxForc = carrinho->primeiro;
-    Carrinho *anteriorc;
-    
-    while(auxForc != NULL) {
-        anteriorc = auxForc;
-        auxForc = auxForc->proximo;
-        free(anteriorc);
-    }
-    carrinho->primeiro = NULL;
-    carrinho->ultimo = NULL;
-}
-
-// Função que Limpa a Memoria
-void limparMemoria(ListProduto *produtos, ListCarrinho *carrinho) {
-    limparCarrinho(carrinho);
-
-    Produto *auxFor = produtos->primeiro;
-    Produto *anterior;
-    while(auxFor != NULL) {
-        anterior = auxFor;
-        auxFor = auxFor->proximo;
-        free(anterior);
-    }
-}
 
 // Função MAIN
 int main() {
